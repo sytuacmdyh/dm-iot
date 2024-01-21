@@ -6820,6 +6820,12 @@
       "config_flow": true,
       "iot_class": "local_polling"
     },
+    "yzccz": {
+      "name": "remote_ctrl",
+      "integration_type": "hub",
+      "config_flow": true,
+      "iot_class": "assumed_state"
+    },
     "zabbix": {
       "name": "Zabbix",
       "integration_type": "hub",

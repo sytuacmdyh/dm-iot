@@ -1,0 +1,13 @@
+{
+  "domain": "yzccz",
+  "name": "remote_ctrl",
+  "codeowners": ["@yzcczdyh"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/yzccz",
+  "homekit": {},
+  "iot_class": "assumed_state",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": []
+}
