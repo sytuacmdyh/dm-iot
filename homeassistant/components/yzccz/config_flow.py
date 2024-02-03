@@ -1,16 +1,40 @@
 """Config flow for remote_ctrl."""
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import config_entry_flow
+# from homeassistant.core import HomeAssistant
+# from homeassistant.helpers import config_entry_flow
 
-from .api import discover_devices
+from typing import Any
+
+import voluptuous as vol
+
+from homeassistant import config_entries
+from homeassistant.data_entry_flow import FlowResult
+import homeassistant.helpers.config_validation as cv
+
+# from .api import discover_devices
 from .const import DOMAIN
 
+STEP_USER_DATA_SCHEMA = vol.Schema(
+    {
+        vol.Optional(
+            "host", default="rt-ctrl.local", description="默认无需修改"
+        ): cv.string,
+    }
+)
 
-async def _async_has_devices(hass: HomeAssistant) -> bool:
-    """Return if there are devices that can be discovered."""
-    # Check if there are any devices that can be discovered in the network.
-    devices = await hass.async_add_executor_job(discover_devices)
-    return len(devices) > 0
 
+class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a config flow for YZC."""
 
-config_entry_flow.register_discovery_flow(DOMAIN, "remote_ctrl", _async_has_devices)
+    VERSION = 1
+
+    async def async_step_user(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Handle the initial step."""
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            return self.async_create_entry(title="YZC Entry", data=user_input)
+
+        return self.async_show_form(
+            step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
+        )
